@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=3 uid="uid://c5y517vm8lnly"]
+
+[ext_resource type="PackedScene" uid="uid://gglpbpdjfuk6" path="res://scenes/nodes/player.tscn" id="1_n8gqh"]
+[ext_resource type="Script" path="res://scripts/enviornment/border.gd" id="1_tg16j"]
+[ext_resource type="Texture2D" uid="uid://bobwuj8b71spb" path="res://assets/sprites/day_bkg.png" id="2_hhg5y"]
+[ext_resource type="Material" uid="uid://cyudi2bjnfw8u" path="res://assets/shader/pixel_fade.tres" id="2_m5nr0"]
+[ext_resource type="Texture2D" uid="uid://bmw603wcumxbv" path="res://assets/sprites/night_bkg.png" id="3_mt4jb"]
+[ext_resource type="PackedScene" uid="uid://b40lcetyt0bbb" path="res://scenes/nodes/gui.tscn" id="5_yo4b3"]
+[ext_resource type="Script" path="res://scripts/timer.gd" id="6_2qu00"]
+[ext_resource type="Script" path="res://scripts/entities/spawner.gd" id="6_4elt8"]
+[ext_resource type="AudioStream" uid="uid://bun3354ao0c7w" path="res://assets/audio/effects/reset.wav" id="6_i3ndj"]
+[ext_resource type="AudioStream" uid="uid://bs83pfxdalmn3" path="res://assets/audio/tracks/me_and_who.wav" id="8_n0p67"]
+[ext_resource type="Script" path="res://scripts/enviornment/music_manager.gd" id="8_tj8k6"]
+[ext_resource type="AudioStream" uid="uid://bal2e1872bbty" path="res://assets/audio/tracks/lifeless.wav" id="9_142un"]
+[ext_resource type="AudioStream" uid="uid://ttnm7l1x1s0d" path="res://assets/audio/tracks/fireflies.wav" id="13_lpsm4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iopq4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xqjqq"]
+radius = 89.0225
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bqf35"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hhg5y")
+}],
+"loop": true,
+"name": &"day",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mt4jb")
+}],
+"loop": true,
+"name": &"night",
+"speed": 5.0
+}]
+
+[node name="Game" type="Node2D"]
+
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 2
+script = ExtResource("1_tg16j")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(-20, 200)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="FloorWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, 353)
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RoofWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, -20)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RightWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(420, 200)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="GuiCircle" type="CollisionShape2D" parent="Border"]
+position = Vector2(-10, 408)
+shape = SubResource("CircleShape2D_xqjqq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Border"]
+material = ExtResource("2_m5nr0")
+position = Vector2(200, 200)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_bqf35")
+animation = &"day"
+
+[node name="Player" parent="." instance=ExtResource("1_n8gqh")]
+position = Vector2(90, 80)
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("6_4elt8")
+
+[node name="SpawnSfx" type="AudioStreamPlayer2D" parent="Spawner"]
+stream = ExtResource("6_i3ndj")
+volume_db = 6.0
+
+[node name="Gui" parent="." instance=ExtResource("5_yo4b3")]
+
+[node name="Timer" type="Node2D" parent="."]
+script = ExtResource("6_2qu00")
+
+[node name="MusicManager" type="Node2D" parent="."]
+script = ExtResource("8_tj8k6")
+
+[node name="Day" type="AudioStreamPlayer2D" parent="MusicManager"]
+stream = ExtResource("8_n0p67")
+
+[node name="Night" type="AudioStreamPlayer2D" parent="MusicManager"]
+stream = ExtResource("9_142un")
+
+[node name="Idle" type="AudioStreamPlayer2D" parent="MusicManager"]
+stream = ExtResource("13_lpsm4")

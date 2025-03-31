@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5y517vm8lnly"]
+
+[ext_resource type="Texture2D" uid="uid://bobwuj8b71spb" path="res://assets/sprites/background.png" id="1_7ewpx"]
+[ext_resource type="PackedScene" uid="uid://gglpbpdjfuk6" path="res://scenes/nodes/player.tscn" id="1_n8gqh"]
+[ext_resource type="Script" path="res://scripts/border.gd" id="1_tg16j"]
+[ext_resource type="PackedScene" uid="uid://b40lcetyt0bbb" path="res://scenes/nodes/gui.tscn" id="5_yo4b3"]
+[ext_resource type="Script" path="res://scripts/spawner.gd" id="6_4elt8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iopq4"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 2
+script = ExtResource("1_tg16j")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(-20, 200)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="FloorWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, 420)
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RoofWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, -20)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RightWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(420, 200)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Border"]
+position = Vector2(200, 200)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_7ewpx")
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("6_4elt8")
+
+[node name="Player" parent="." instance=ExtResource("1_n8gqh")]
+position = Vector2(90, 80)
+
+[node name="Gui" parent="." instance=ExtResource("5_yo4b3")]

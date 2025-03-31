@@ -1,0 +1,172 @@
+[gd_scene load_steps=16 format=3 uid="uid://coum3wwcxxbqr"]
+
+[ext_resource type="Texture2D" uid="uid://bgt2v6v5c74yu" path="res://assets/sprites/bkg.png" id="2_510g1"]
+[ext_resource type="Script" uid="uid://cqd44rlpbj7lj" path="res://scripts/components/autoplay_comp.gd" id="3_a0mmy"]
+[ext_resource type="AudioStream" uid="uid://bfxhlfbwir12e" path="res://assets/audio/click.wav" id="3_g2eir"]
+[ext_resource type="FontFile" uid="uid://8ut4nf3bscp2" path="res://assets/other/birdbox.ttf" id="4_h4s44"]
+
+[sub_resource type="GDScript" id="GDScript_cex45"]
+script/source = "extends CanvasGroup
+
+
+#IM SORRY ILL MAKE IT CUSTOM LATER DEEPSEEK MADE IT LOOK LESS LIKE CRAP
+
+
+@onready var text_label: Label = $Label
+@onready var click_sfx: AudioStreamPlayer2D = $Click
+
+var progress: float = 4.0
+var alpha: float = 1.0
+var alpha_time: float = 0.3
+var has_played: Array = [false, false]
+
+
+func _ready() -> void:
+	print(\"game successfully started\")
+	text_label.text = \"\"
+
+
+func _process(delta: float) -> void:
+	progress -= delta
+	
+	if Input.is_anything_pressed():
+		transition_to_game()
+	
+	update_text_label()
+	handle_fade_out(delta)
+
+
+func update_text_label() -> void:
+	if progress >= 3.0:
+		text_label.text = \"a game by\"
+		play_sfx_once(0)
+	elif progress >= 2.0:
+		text_label.text = \"a game by\\ncrowpunt\"
+		play_sfx_once(1)
+
+
+func handle_fade_out(delta: float) -> void:
+	if progress < 2.25:
+		alpha_time -= delta
+		if alpha_time <= 0:
+			alpha -= 0.25
+			@warning_ignore(\"inferred_declaration\")
+			for child in get_children():
+				if child is CanvasItem:
+					child.modulate = Color(1, 1, 1, alpha)
+			alpha_time = 0.3
+	
+		if alpha <= 0:
+			transition_to_game()
+
+
+func play_sfx_once(index: int) -> void:
+	if not has_played[index]:
+		has_played[index] = true
+		if not click_sfx.playing:
+			print(\"played sfx\")
+			click_sfx.play()
+
+
+func transition_to_game() -> void:
+	print(\"transitioned to game\")
+	get_tree().change_scene_to_file(\"res://scenes/main_scenes/title.tscn\")
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cex45"]
+atlas = ExtResource("2_510g1")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0mmy"]
+atlas = ExtResource("2_510g1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4s44"]
+atlas = ExtResource("2_510g1")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mkgl"]
+atlas = ExtResource("2_510g1")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro657"]
+atlas = ExtResource("2_510g1")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twdxy"]
+atlas = ExtResource("2_510g1")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5jh3"]
+atlas = ExtResource("2_510g1")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utfsp"]
+atlas = ExtResource("2_510g1")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lma83"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cex45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0mmy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4s44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mkgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro657")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twdxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5jh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utfsp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_msmgr"]
+font = ExtResource("4_h4s44")
+font_size = 4
+
+[node name="Startup" type="Node2D"]
+
+[node name="Startup" type="CanvasGroup" parent="."]
+z_index = 7
+position = Vector2(60, 45)
+script = SubResource("GDScript_cex45")
+
+[node name="Click" type="AudioStreamPlayer2D" parent="Startup"]
+stream = ExtResource("3_g2eir")
+volume_db = -5.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Startup"]
+sprite_frames = SubResource("SpriteFrames_lma83")
+frame_progress = 0.884443
+
+[node name="autoplay_comp" type="Node" parent="Startup/AnimatedSprite2D"]
+script = ExtResource("3_a0mmy")
+metadata/_custom_type_script = "uid://cqd44rlpbj7lj"
+
+[node name="Label" type="Label" parent="Startup"]
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
+offset_bottom = 46.0
+text = "a game by
+crowpunt"
+label_settings = SubResource("LabelSettings_msmgr")
+horizontal_alignment = 1
+vertical_alignment = 1

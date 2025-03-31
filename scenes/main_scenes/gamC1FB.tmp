@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5y517vm8lnly"]
+
+[ext_resource type="PackedScene" uid="uid://gglpbpdjfuk6" path="res://scenes/nodes/player.tscn" id="1_n8gqh"]
+[ext_resource type="PackedScene" uid="uid://dttxo5lobxhr1" path="res://scenes/nodes/autofisher.tscn" id="2_bsph6"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iopq4"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Border" type="StaticBody2D" parent="."]
+
+[node name="LeftWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(-20, 200)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="FloorWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, 420)
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RoofWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(200, -20)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="RightWall" type="CollisionShape2D" parent="Border"]
+position = Vector2(420, 200)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_iopq4")
+
+[node name="Player" parent="." instance=ExtResource("1_n8gqh")]
+position = Vector2(86, 91)
+
+[node name="Autofisher" parent="." instance=ExtResource("2_bsph6")]
+position = Vector2(249, 95)
