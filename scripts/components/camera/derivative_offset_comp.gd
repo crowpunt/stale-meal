@@ -7,6 +7,8 @@ extends Node2D
 
 func _process(_delta: float) -> void:
 	offset_for_pos(get_global_mouse_position())
+	parent.position.x = round(parent.position.x)
+	parent.position.y = round(parent.position.y)
 
 
 func offset_for_pos(pos: Vector2) -> void:

@@ -8,14 +8,6 @@ var file_path: String = "user://stalemeal.save"
 
 
 func _process(_delta: float) -> void:
-	if Save.load_data() == {}:
-			# basically if it's blank
-		load_button.disabled = true
-			# visibility is not important thanks to font stuff
-	else:
-		load_button.disabled = false
-	
-	
 	if save_guard.disabled == false:
 		save_button.disabled = true
 		save_guard.position.x = save_button.position.x

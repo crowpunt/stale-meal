@@ -17,6 +17,6 @@ func zoom_camera(camera: Camera2D) -> void:
 			camera.zoom.y += 0.05
 	if Input.is_action_just_released("zoom_out"):
 		print("camera zooming out")
-		if camera.zoom.x > 0.35:
+		if camera.zoom.x > 0.475:
 			camera.zoom.x -= 0.05
 			camera.zoom.y -= 0.05

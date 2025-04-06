@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://delo0jd7o5o1h"]
+[gd_scene load_steps=18 format=3 uid="uid://delo0jd7o5o1h"]
 
 [ext_resource type="Script" uid="uid://dduuxbc80ydbn" path="res://scripts/other/appliance.gd" id="1_l3eer"]
 [ext_resource type="Texture2D" uid="uid://blbg02o06jpcx" path="res://assets/sprites/unit_sprites/appliances.png" id="1_necpn"]
+[ext_resource type="Texture2D" uid="uid://dmx8lqci0v0o6" path="res://assets/sprites/selecting.png" id="3_wo2ge"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_brbpo"]
 atlas = ExtResource("1_necpn")
@@ -154,14 +155,17 @@ animations = [{
 size = Vector2(12, 12)
 
 [node name="Unit" type="StaticBody2D"]
-y_sort_enabled = true
 script = ExtResource("1_l3eer")
 
+[node name="Selecting" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(0, -8)
+texture = ExtResource("3_wo2ge")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -2)
-scale = Vector2(0.86, 0.86)
+position = Vector2(0.5, -3)
 sprite_frames = SubResource("SpriteFrames_brbpo")
-animation = &"11"
+animation = &"31"
 
 [node name="Area2D" type="Area2D" parent="."]
 

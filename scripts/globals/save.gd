@@ -16,7 +16,7 @@ var save_data_temp: Dictionary = {
 	],
 	"customers_served" : 0,
 	"money" : 0,
-	
+	"tutorial_done" : false,
 }
 
 var save_data: Dictionary
