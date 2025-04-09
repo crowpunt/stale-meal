@@ -1,7 +1,11 @@
 extends StaticBody2D
 
 
-var seated: bool = true
+var seated: bool = false
+var eating_cd: float = 0
+var eating: bool = true
+	# going to seat
+
 var recheck_cooldown: float = 0.5
 var nearest: StaticBody2D
 var checks_til_debug: int = 4
@@ -15,7 +19,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	recheck_cooldown -= delta
-	
+
 	if checks_til_debug <= 0:
 		checks_til_debug = 4
 		if nearest != null:
@@ -30,9 +34,24 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if seated == true and eating == true:
+		Save.save_data["happy"] -= 0.025
+	
 	if nearest != null:
-		var goto_pos: Vector2 = Vector2(nearest.position.x, nearest.position.y - 3)
-		self.position = self.position.move_toward(goto_pos, 0.5)
+		var goto_pos: Vector2 = Vector2(nearest.global_position.x, nearest.global_position.y - 3)
+		
+		if eating == true and seated == false:
+			self.global_position = self.global_position.move_toward(goto_pos, 0.5)
+		if eating == false and seated == false:
+			self.global_position = self.global_position.move_toward(get_parent().position, 0.5)
+		
+		if self.global_position == get_parent().global_position and seated == false and  eating == false:
+			print("customer exited the building")
+			queue_free()
+		
+		if self.global_position == goto_pos and seated == false and eating == true:
+			print("customer has reached their table")
+			eating = false
 
 
 func get_nearest_table() -> StaticBody2D:

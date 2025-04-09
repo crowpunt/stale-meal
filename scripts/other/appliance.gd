@@ -56,3 +56,12 @@ func _on_area_2d_mouse_entered() -> void:
 
 func _on_area_2d_mouse_exited() -> void:
 	in_area = false
+
+
+func get_nearest_customer() -> StaticBody2D:
+	var closest: StaticBody2D
+	if get_tree().get_nodes_in_group("customers").is_empty() == false:
+		for customer: StaticBody2D in get_tree().get_nodes_in_group("customers"):
+			if customer.position.distance_to(self.position) <= closest.position.distance_to(self.position):
+				closest = customer
+	return closest

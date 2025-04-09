@@ -4,13 +4,15 @@ extends CanvasLayer
 @onready var selecting: StaticBody2D = $Selecting
 @onready var color_rect: ColorRect = $ColorRect
 
-var mouse_in: Array = [false, false, false, false]
+@onready var stat_label: Label = $TextGui/StatLabel
 
+var mouse_in: Array = [false, false, false, false]
 var move_select_towards: bool = true
 
 
 func _process(_delta: float) -> void:
 	handle_upgrading()
+	change_stat_label()
 	handle_shading_rect()
 
 
@@ -24,7 +26,6 @@ func handle_shading_rect() -> void:
 		color_rect.modulate = Color(1, 1, 1, 0.8)
 	else:
 		color_rect.modulate = Color(1, 1, 1, 0)
-		
 
 
 func handle_movement() -> void:
@@ -52,30 +53,39 @@ func handle_upgrading() -> void:
 		type = 0
 	
 	if Input.is_action_just_pressed("left_click") and UpgradeInfo.selected_app > -1:
-		if mouse_in[0] == true:
-			if cat != 1:
-				cat = 1
-				type = 1
-			elif type < 5:
-				type += 1
-			print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
-		elif mouse_in[1] == true:
-			if cat != 2:
-				cat = 2
-				type = 1
-			elif type < 3:
-				type += 1
-			print(str(UpgradeInfo.selected_app) + " id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
-		elif mouse_in[2] == true:
-			if cat != 3:
-				cat = 3
-				type = 1
-			elif type < 3:
-				type += 1
-			print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
-		elif mouse_in[3] == true:
-			cat = 0
-			type = 0
+		if Save.save_data["money"] >= 300:
+			if mouse_in[0] == true:
+				if cat != 1:
+					Save.save_data["money"] -= 300
+					cat = 1
+					type = 1
+				elif type < 5:
+					Save.save_data["money"] -= 500
+					type += 1
+				print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+			elif mouse_in[1] == true:
+				if cat != 2:
+					Save.save_data["money"] -= 300
+					cat = 2
+					type = 1
+				elif type < 3:
+					Save.save_data["money"] -= 500
+					type += 1
+				print(str(UpgradeInfo.selected_app) + " id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+			elif mouse_in[2] == true:
+				if cat != 3:
+					Save.save_data["money"] -= 300
+					cat = 3
+					type = 1
+				elif type < 3:
+					Save.save_data["money"] -= 500
+					type += 1
+				print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+		if mouse_in[3] == true:
+			if save_spot != 0:
+				Save.save_data["money"] += 200
+				cat = 0
+				type = 0
 			print(str(UpgradeInfo.selected_app) + " made blank")
 		
 		print("closed menu for appliance " + str(UpgradeInfo.selected_app))
@@ -83,6 +93,10 @@ func handle_upgrading() -> void:
 		Save.save_data["cell_ids"][UpgradeInfo.selected_app] = save_spot
 		UpgradeInfo.selected_app = -1
 		Save.save_to_file()
+
+
+func change_stat_label() -> void:
+	stat_label.text = "cash\n" + str(int(Save.save_data["money"])) + "\n\n\nhappy\n" + str(int(Save.save_data["happy"]))
 
 
 # im calling this the signal yard because that sounds cool
