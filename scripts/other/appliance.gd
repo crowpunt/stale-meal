@@ -7,8 +7,10 @@ extends StaticBody2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var selecting: Sprite2D = $Selecting
 
+@onready var taken: bool = false
+@onready 
+
 var in_area: bool = false
-var noticed: bool = false
 
 
 #note that ysort can only be used if the 2 objects being ysorted are direct siblings and their parent has ysort enabled
@@ -58,10 +60,10 @@ func _on_area_2d_mouse_exited() -> void:
 	in_area = false
 
 
-func get_nearest_customer() -> StaticBody2D:
-	var closest: StaticBody2D
-	if get_tree().get_nodes_in_group("customers").is_empty() == false:
-		for customer: StaticBody2D in get_tree().get_nodes_in_group("customers"):
-			if customer.position.distance_to(self.position) <= closest.position.distance_to(self.position):
+func get_nearest_table() -> StaticBody2D:
+	var closest: StaticBody2D = null
+	for customer in get_tree().get_nodes_in_group("customers"):
+		if str(customer.type)[0] == "3" and customer.taken == false:
 				closest = customer
+				break
 	return closest

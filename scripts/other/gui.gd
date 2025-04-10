@@ -29,17 +29,18 @@ func handle_shading_rect() -> void:
 
 
 func handle_movement() -> void:
+	print(selecting.position.y)
 	if UpgradeInfo.selected_app > -1:
 		move_select_towards = false
 	else:
 		move_select_towards = true
 	
 	if move_select_towards == true:
-		if selecting.position.x > -40:
-			selecting.position.x -= 4
+		if selecting.position.y < 0:
+			selecting.position.y += 4
 	else:
-		if selecting.position.x < 0:
-			selecting.position.x += 4
+		if selecting.position.y > -26:
+			selecting.position.y -= 4
 
 
 func handle_upgrading() -> void:
@@ -100,6 +101,7 @@ func change_stat_label() -> void:
 
 
 # im calling this the signal yard because that sounds cool
+
 
 func _on_oven_button_mouse_entered() -> void:
 	mouse_in[0] = true

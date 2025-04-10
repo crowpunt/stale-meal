@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://by7bw5k2t1nrj" path="res://assets/sprites/title/background_title.png" id="1_6lybn"]
 [ext_resource type="Script" uid="uid://c0oe21xmrm3rb" path="res://scripts/other/title_button_manager.gd" id="1_dwypo"]
-[ext_resource type="FontFile" uid="uid://8ut4nf3bscp2" path="res://assets/other/birdbox.ttf" id="2_ighft"]
 [ext_resource type="Texture2D" uid="uid://dmnfj2n47fn7b" path="res://assets/sprites/title/counter.png" id="2_udrvt"]
 [ext_resource type="Texture2D" uid="uid://c2g2468d6tpig" path="res://assets/sprites/title/foodstuff.png" id="3_bae0g"]
 [ext_resource type="Texture2D" uid="uid://b8fvxkd0eg2qf" path="res://assets/sprites/title/title_sign_sheet.png" id="3_c2y2l"]
 [ext_resource type="Texture2D" uid="uid://dxl3ylbufupui" path="res://assets/sprites/title/background_title_buttons.png" id="3_e8nv5"]
 [ext_resource type="Script" uid="uid://cqd44rlpbj7lj" path="res://scripts/components/autoplay_comp.gd" id="4_6lybn"]
 [ext_resource type="Script" uid="uid://c2pdq1vfrqvvy" path="res://scripts/other/rects/fade_out.gd" id="7_udrvt"]
+[ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/other/4x4-font.ttf" id="8_gnnkw"]
 [ext_resource type="Script" uid="uid://xrifvbhed3bb" path="res://scripts/other/rects/fade_to_next_from_title.gd" id="10_gnnkw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3eh1d"]
@@ -268,7 +268,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_ighft")
+theme_override_fonts/font = ExtResource("8_gnnkw")
 theme_override_font_sizes/font_size = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_udrvt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_88chj")
@@ -302,7 +302,7 @@ theme_override_colors/font_hover_pressed_color = Color(0.470588, 0.223529, 0.207
 theme_override_colors/font_hover_color = Color(0.470588, 0.223529, 0.207843, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_ighft")
+theme_override_fonts/font = ExtResource("8_gnnkw")
 theme_override_font_sizes/font_size = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dwypo")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_ighft")
@@ -330,7 +330,7 @@ theme_override_colors/font_hover_pressed_color = Color(0.470588, 0.223529, 0.207
 theme_override_colors/font_hover_color = Color(0.470588, 0.223529, 0.207843, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_ighft")
+theme_override_fonts/font = ExtResource("8_gnnkw")
 theme_override_font_sizes/font_size = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bclnd")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_3eh1d")

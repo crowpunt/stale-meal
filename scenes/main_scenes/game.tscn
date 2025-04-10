@@ -5,21 +5,21 @@
 [ext_resource type="Script" uid="uid://c2pdq1vfrqvvy" path="res://scripts/other/rects/fade_out.gd" id="3_ifh15"]
 [ext_resource type="Script" uid="uid://jujrgwi2f0a1" path="res://scripts/components/camera/derivative_offset_comp.gd" id="3_ks7w8"]
 [ext_resource type="Script" uid="uid://culob26q5v2f1" path="res://scripts/components/camera/zoom_camera_comp.gd" id="4_3wwfn"]
+[ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/other/4x4-font.ttf" id="4_5amgp"]
 [ext_resource type="Script" uid="uid://dikewkte6kvlh" path="res://scripts/other/gui.gd" id="4_leqql"]
 [ext_resource type="Texture2D" uid="uid://bgyik0altasob" path="res://assets/sprites/gui_counter.png" id="4_t5sjj"]
-[ext_resource type="FontFile" uid="uid://8ut4nf3bscp2" path="res://assets/other/birdbox.ttf" id="5_rbptj"]
-[ext_resource type="Texture2D" uid="uid://dmnfj2n47fn7b" path="res://assets/sprites/title/counter.png" id="6_5amgp"]
 [ext_resource type="PackedScene" uid="uid://bji4unqw5my0g" path="res://scenes/units/customer.tscn" id="8_cfqos"]
+[ext_resource type="Script" uid="uid://k0vpwmiq5r1" path="res://scripts/components/spawner_comp.gd" id="11_3ls1w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfqos"]
-size = Vector2(24, 18)
+size = Vector2(15, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leqql"]
-size = Vector2(40, 89)
+size = Vector2(120, 39.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5amgp"]
 line_spacing = 1.0
-font = ExtResource("5_rbptj")
+font = ExtResource("4_5amgp")
 font_size = 3
 font_color = Color(0, 0, 0, 1)
 
@@ -48,47 +48,43 @@ color = Color(0.0235294, 0.0392157, 0.0745098, 1)
 position = Vector2(-40, 0)
 
 [node name="GuiCounter" type="Sprite2D" parent="Camera2D/Gui/Selecting"]
-position = Vector2(20, 45)
+position = Vector2(100, 110)
 texture = ExtResource("4_t5sjj")
 
 [node name="OvenButton" type="Area2D" parent="Camera2D/Gui/Selecting"]
+position = Vector2(64, 92)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Gui/Selecting/OvenButton"]
-position = Vector2(25, 15)
+position = Vector2(20.5, 13.5)
 shape = SubResource("RectangleShape2D_cfqos")
 
 [node name="RegisterButton" type="Area2D" parent="Camera2D/Gui/Selecting"]
-position = Vector2(0, 18)
+position = Vector2(26, 91)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Gui/Selecting/RegisterButton"]
 position = Vector2(25, 15)
 shape = SubResource("RectangleShape2D_cfqos")
 
 [node name="TableButton" type="Area2D" parent="Camera2D/Gui/Selecting"]
-position = Vector2(0, 36)
+position = Vector2(43, 91)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Gui/Selecting/TableButton"]
 position = Vector2(25, 15)
 shape = SubResource("RectangleShape2D_cfqos")
 
 [node name="RemoveButton" type="Area2D" parent="Camera2D/Gui/Selecting"]
-position = Vector2(0, 63)
+position = Vector2(77, 91)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Gui/Selecting/RemoveButton"]
 position = Vector2(25, 15)
 shape = SubResource("RectangleShape2D_cfqos")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Gui/Selecting"]
-position = Vector2(20, 44.5)
+position = Vector2(100, 110.25)
 shape = SubResource("RectangleShape2D_leqql")
 disabled = true
 
 [node name="TextGui" type="CanvasGroup" parent="Camera2D/Gui"]
-
-[node name="Counter" type="Sprite2D" parent="Camera2D/Gui/TextGui"]
-position = Vector2(98, 45)
-texture = ExtResource("6_5amgp")
-flip_h = true
 
 [node name="StatLabel" type="Label" parent="Camera2D/Gui/TextGui"]
 offset_left = 97.0
@@ -208,6 +204,10 @@ y_sort_enabled = true
 position = Vector2(60, 98)
 
 [node name="Customer" parent="Ysort/Customers" groups=["customers"] instance=ExtResource("8_cfqos")]
+
+[node name="spawner_comp" type="Node" parent="Ysort/Customers"]
+script = ExtResource("11_3ls1w")
+metadata/_custom_type_script = "uid://k0vpwmiq5r1"
 
 [connection signal="mouse_entered" from="Camera2D/Gui/Selecting/OvenButton" to="Camera2D/Gui" method="_on_oven_button_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/Gui/Selecting/OvenButton" to="Camera2D/Gui" method="_on_oven_button_mouse_exited"]
