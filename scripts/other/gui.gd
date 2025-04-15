@@ -4,7 +4,8 @@ extends CanvasLayer
 @onready var selecting: StaticBody2D = $Selecting
 @onready var color_rect: ColorRect = $ColorRect
 
-@onready var stat_label: Label = $TextGui/StatLabel
+@onready var cash_label: Label = $TextGui/CashLabel
+@onready var percent_label: Label = $TextGui/PercentLabel
 
 var mouse_in: Array = [false, false, false, false]
 var move_select_towards: bool = true
@@ -29,7 +30,6 @@ func handle_shading_rect() -> void:
 
 
 func handle_movement() -> void:
-	print(selecting.position.y)
 	if UpgradeInfo.selected_app > -1:
 		move_select_towards = false
 	else:
@@ -54,34 +54,33 @@ func handle_upgrading() -> void:
 		type = 0
 	
 	if Input.is_action_just_pressed("left_click") and UpgradeInfo.selected_app > -1:
-		if Save.save_data["money"] >= 300:
-			if mouse_in[0] == true:
-				if cat != 1:
-					Save.save_data["money"] -= 300
-					cat = 1
-					type = 1
-				elif type < 5:
-					Save.save_data["money"] -= 500
-					type += 1
-				print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
-			elif mouse_in[1] == true:
-				if cat != 2:
-					Save.save_data["money"] -= 300
-					cat = 2
-					type = 1
-				elif type < 3:
-					Save.save_data["money"] -= 500
-					type += 1
-				print(str(UpgradeInfo.selected_app) + " id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
-			elif mouse_in[2] == true:
-				if cat != 3:
-					Save.save_data["money"] -= 300
-					cat = 3
-					type = 1
-				elif type < 3:
-					Save.save_data["money"] -= 500
-					type += 1
-				print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+		if mouse_in[0] == true:
+			if cat != 1 and Save.save_data["money"] >= 300:
+				Save.save_data["money"] -= 300
+				cat = 1
+				type = 1
+			elif type < 3 and Save.save_data["money"] >= 500:
+				Save.save_data["money"] -= 500
+				type += 1
+			print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+		elif mouse_in[1] == true:
+			if cat != 2 and Save.save_data["money"] >= 300:
+				Save.save_data["money"] -= 300
+				cat = 2
+				type = 1
+			elif type < 3 and Save.save_data["money"] >= 500:
+				Save.save_data["money"] -= 500
+				type += 1
+			print(str(UpgradeInfo.selected_app) + " id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
+		elif mouse_in[2] == true:
+			if cat != 3 and Save.save_data["money"] >= 300:
+				Save.save_data["money"] -= 300
+				cat = 3
+				type = 1
+			elif type < 3 and Save.save_data["money"] >= 500:
+				Save.save_data["money"] -= 500
+				type += 1
+			print(str(UpgradeInfo.selected_app) + "s id changed to " + str(Save.save_data["cell_ids"][UpgradeInfo.selected_app]))
 		if mouse_in[3] == true:
 			if save_spot != 0:
 				Save.save_data["money"] += 200
@@ -97,7 +96,20 @@ func handle_upgrading() -> void:
 
 
 func change_stat_label() -> void:
-	stat_label.text = "cash\n" + str(int(Save.save_data["money"])) + "\n\n\nhappy\n" + str(int(Save.save_data["happy"]))
+	var cash: int = int(Save.save_data["money"])
+	var percent: int = int(Save.save_data["happy"])
+	
+	if cash < 9999:
+		cash_label.text = str(cash) + "$"
+	elif cash < 0:
+		cash_label.text = "0$"
+	else:
+		cash_label.text = "+9999$"
+	
+	if percent >= 0:
+		percent_label.text = "%" + str(percent)
+	else:
+		percent_label.text = "%0"
 
 
 # im calling this the signal yard because that sounds cool

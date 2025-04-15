@@ -2,11 +2,11 @@ extends Node
 
 
 var file_path: String = "user://stalemeal.save"
-var version: String = "v1-dev"
+const VERSION: String = "v1-release"
 
 
 var save_data_temp: Dictionary = {
-	"version" : version,
+	"version" : VERSION,
 	"cell_ids" : [
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
@@ -14,8 +14,7 @@ var save_data_temp: Dictionary = {
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 	],
-	"served" : 0,
-	"money" : 100,
+	"money" : 4000,
 	"happy" : 100,
 	"tutorial_done" : false,
 }
@@ -30,7 +29,7 @@ func _ready() -> void:
 		save_to_file()
 	
 	save_data = load_data()
-	save_data["version"] = version
+	save_data["version"] = VERSION
 	
 	@warning_ignore("untyped_declaration")
 	for data in save_data_temp:

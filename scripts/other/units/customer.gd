@@ -8,11 +8,14 @@ enum State {
 }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var progress_bar: ProgressBar = $ProgressBar
 
-var state: int = State.WALKING
+@onready var state: int = State.WALKING
 var current_table: StaticBody2D = null
 var speed: float = randf_range(0.25, 1)
 var recheck_cooldown: float = 0.5
+var move_cooldown: float = 3
+var made_mess: bool = false
 
 
 func _ready() -> void:
@@ -27,6 +30,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	draw_cooldown_gui()
+	
 	recheck_cooldown -= delta
 	
 	if recheck_cooldown <= 0 or current_table == null:
@@ -44,7 +49,8 @@ func _process(delta: float) -> void:
 		sprite.play()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	#i gotta put this into a function ._.
 	match state:
 		State.WALKING:
 			if current_table:
@@ -57,15 +63,43 @@ func _physics_process(_delta: float) -> void:
 					print("customer has reached their table")
 					state = State.EATING
 		State.LEAVING:
+			if made_mess == false:
+				made_mess = true
+				var current: int = Save.save_data["cell_ids"][int(current_table.name)]
+				if current != 0:
+					# this game sucks
+					if randi_range(1, int(str(current_table.type)[1]) * 2) == 1:
+						var mess_scene: PackedScene = preload("res://scenes/units/mess.tscn")
+						var scene: StaticBody2D = mess_scene.instantiate()
+						scene.global_position = self.global_position
+						get_tree().get_first_node_in_group("mess_organizer").add_child(scene)
+			move_cooldown -= delta
 			var exit_pos: Vector2 = get_parent().global_position
-			global_position = global_position.move_toward(exit_pos, speed)
+			if move_cooldown <= 0:
+				global_position = global_position.move_toward(exit_pos, speed)
 			
 			if global_position.distance_to(exit_pos) < 5:
-				print("customer exited the building")
 				current_table.taken = false
 				remove_from_group("customers")
+				
+				var multiplier: float = 1
+				for register: StaticBody2D in get_tree().get_nodes_in_group("appliances"):
+					if str(register.type)[0] == "2":
+						multiplier += (0.25 * (float(str(register.type)[1]) * 1.5))
+				Save.save_data["money"] += round(50 * multiplier)
+				if Save.save_data["happy"] <= 95:
+					Save.save_data["happy"] += 5
+				print("customer exited the building, gained " + str(50 * multiplier) + "$")
+				Save.save_to_file()
 				queue_free()
 
+
+func draw_cooldown_gui() -> void:
+	progress_bar.value = move_cooldown
+	if move_cooldown > 0 and state == State.LEAVING:
+		progress_bar.visible = true
+	else:
+		progress_bar.visible = false
 
 
 func get_nearest_table() -> StaticBody2D:

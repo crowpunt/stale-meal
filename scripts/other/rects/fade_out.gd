@@ -7,7 +7,6 @@ var alpha_time: float = 0.3
 
 func _ready() -> void:
 	self.visible = true
-	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _process(delta: float) -> void:

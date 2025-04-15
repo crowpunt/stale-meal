@@ -9,7 +9,6 @@ var transition: bool = false
 
 func _ready() -> void:
 	self.visible = true
-	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _process(delta: float) -> void:

@@ -6,9 +6,11 @@ extends StaticBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var selecting: Sprite2D = $Selecting
+@onready var progress_bar: ProgressBar = $ProgressBar
 
 @onready var taken: bool = false
-@onready 
+var interact_cooldown: float = 0
+var max_cd: int = 10
 
 var in_area: bool = false
 
@@ -20,18 +22,30 @@ func _ready() -> void:
 	add_to_group("appliances")
 
 
-func _process(_delta: float) -> void:
-	change_type()
+func _process(delta: float) -> void:
+	interact_cooldown -= delta
+	
+	draw_cooldown_gui()
+	manage_type()
 	select_app()
 	handle_selected()
-	# keeping this for now for later behaviors
-	#if floor(type / 10) == 1:
-		#stuff
 
 
-func change_type() -> void:
+func manage_type() -> void:
 	type = int(Save.save_data["cell_ids"][place])
 	sprite.animation = str(type)
+	
+	if str(type)[0] == "1":
+		var style: int = int(str(type)[1])
+		max_cd = 4 + (3 - style) * 3
+	
+	if in_area == true and Input.is_action_just_pressed("left_click") and str(type)[0] == "1" and interact_cooldown <= 0:
+		print("stove interacted with, cd is " + str(max_cd))
+		for customer: StaticBody2D in get_tree().get_nodes_in_group("customers"):
+			if customer.state == customer.State.EATING:
+				customer.state = customer.State.LEAVING
+				interact_cooldown = max_cd
+				break
 
 
 func select_app() -> void:
@@ -52,6 +66,15 @@ func handle_selected() -> void:
 		selecting.visible = false
 
 
+func draw_cooldown_gui() -> void:
+	progress_bar.value = interact_cooldown
+	progress_bar.max_value = max_cd
+	if interact_cooldown > 0:
+		progress_bar.visible = true
+	else:
+		progress_bar.visible = false
+
+
 func _on_area_2d_mouse_entered() -> void:
 	in_area = true
 
@@ -62,8 +85,7 @@ func _on_area_2d_mouse_exited() -> void:
 
 func get_nearest_table() -> StaticBody2D:
 	var closest: StaticBody2D = null
-	for customer in get_tree().get_nodes_in_group("customers"):
-		if str(customer.type)[0] == "3" and customer.taken == false:
-				closest = customer
-				break
+	for customer: StaticBody2D in get_tree().get_nodes_in_group("customers"):
+		closest = customer
+		break
 	return closest

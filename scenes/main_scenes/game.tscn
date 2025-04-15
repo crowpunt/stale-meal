@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://delo0jd7o5o1h" path="res://scenes/units/appliance.tscn" id="2_3wwfn"]
 [ext_resource type="Script" uid="uid://c2pdq1vfrqvvy" path="res://scripts/other/rects/fade_out.gd" id="3_ifh15"]
 [ext_resource type="Script" uid="uid://jujrgwi2f0a1" path="res://scripts/components/camera/derivative_offset_comp.gd" id="3_ks7w8"]
+[ext_resource type="Texture2D" uid="uid://d4fim5kb5h4pg" path="res://assets/sprites/gui_top.png" id="4_3ls1w"]
 [ext_resource type="Script" uid="uid://culob26q5v2f1" path="res://scripts/components/camera/zoom_camera_comp.gd" id="4_3wwfn"]
-[ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/other/4x4-font.ttf" id="4_5amgp"]
+[ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/fonts/4x4-font.ttf" id="4_5amgp"]
 [ext_resource type="Script" uid="uid://dikewkte6kvlh" path="res://scripts/other/gui.gd" id="4_leqql"]
 [ext_resource type="Texture2D" uid="uid://bgyik0altasob" path="res://assets/sprites/gui_counter.png" id="4_t5sjj"]
-[ext_resource type="PackedScene" uid="uid://bji4unqw5my0g" path="res://scenes/units/customer.tscn" id="8_cfqos"]
 [ext_resource type="Script" uid="uid://k0vpwmiq5r1" path="res://scripts/components/spawner_comp.gd" id="11_3ls1w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfqos"]
@@ -37,12 +37,11 @@ zoom = Vector2(0.55, 0.55)
 script = ExtResource("4_leqql")
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D/Gui"]
-modulate = Color(1, 1, 1, 0)
-offset_left = -79.0
-offset_top = -71.0
-offset_right = 199.0
-offset_bottom = 149.0
-color = Color(0.0235294, 0.0392157, 0.0745098, 1)
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 125.0
+offset_bottom = 111.0
+color = Color(0.024, 0.039, 0.075, 0.724)
 
 [node name="Selecting" type="StaticBody2D" parent="Camera2D/Gui"]
 position = Vector2(-40, 0)
@@ -86,18 +85,29 @@ disabled = true
 
 [node name="TextGui" type="CanvasGroup" parent="Camera2D/Gui"]
 
-[node name="StatLabel" type="Label" parent="Camera2D/Gui/TextGui"]
-offset_left = 97.0
-offset_top = 3.0
-offset_right = 120.0
-offset_bottom = 89.0
-text = "CASH
-100
+[node name="GuiTop" type="Sprite2D" parent="Camera2D/Gui/TextGui"]
+position = Vector2(60, 15)
+texture = ExtResource("4_3ls1w")
 
-
-HAPPY
-100"
+[node name="CashLabel" type="Label" parent="Camera2D/Gui/TextGui"]
+offset_left = 23.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 5.0
+text = "+9999$"
 label_settings = SubResource("LabelSettings_5amgp")
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="PercentLabel" type="Label" parent="Camera2D/Gui/TextGui"]
+offset_left = 71.0
+offset_top = 1.0
+offset_right = 95.0
+offset_bottom = 5.0
+text = "%100"
+label_settings = SubResource("LabelSettings_5amgp")
+vertical_alignment = 1
 autowrap_mode = 1
 
 [node name="FadeRect" type="CanvasLayer" parent="Camera2D"]
@@ -203,11 +213,11 @@ position = Vector2(84, 90)
 y_sort_enabled = true
 position = Vector2(60, 98)
 
-[node name="Customer" parent="Ysort/Customers" groups=["customers"] instance=ExtResource("8_cfqos")]
-
-[node name="spawner_comp" type="Node" parent="Ysort/Customers"]
+[node name="customer_spawner" type="Node" parent="Ysort/Customers"]
 script = ExtResource("11_3ls1w")
 metadata/_custom_type_script = "uid://k0vpwmiq5r1"
+
+[node name="Messes" type="Node2D" parent="Ysort" groups=["mess_organizer"]]
 
 [connection signal="mouse_entered" from="Camera2D/Gui/Selecting/OvenButton" to="Camera2D/Gui" method="_on_oven_button_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/Gui/Selecting/OvenButton" to="Camera2D/Gui" method="_on_oven_button_mouse_exited"]

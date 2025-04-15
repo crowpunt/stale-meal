@@ -17,6 +17,7 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="crowpunt_games"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/show_image=false
+config/icon="uid://f72l4xxvjpjm"
 
 [autoload]
 
@@ -32,7 +33,6 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=120
 window/size/viewport_height=90
-window/size/resizable=false
 window/size/window_width_override=720
 window/size/window_height_override=540
 window/stretch/mode="canvas_items"
