@@ -3,7 +3,7 @@ extends Node
 
 
 var cooldown: float = 3
-var cooldown_enemy: float = 1
+var cooldown_enemy: float = 30
 var customer_scene: PackedScene = preload("res://scenes/units/customer.tscn")
 var enemy_scene: PackedScene = preload("res://scenes/units/angry.tscn")
 
@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 			get_parent().add_child(enemy_scene.instantiate())
 		else:
 			print("enemy was not spawned")
-		cooldown_enemy = 1
+		cooldown_enemy = 30
 	
 	if cooldown <= 0:
 		var not_all_taken: bool = false

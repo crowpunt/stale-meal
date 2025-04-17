@@ -20,7 +20,10 @@ func _process(delta: float) -> void:
 			alpha_time = 0.3
 
 	if alpha >= 1:
-		get_tree().change_scene_to_file("res://scenes/main_scenes/game.tscn")
+		if Save.save_data["tutorial_done"] == true:
+			get_tree().change_scene_to_file("res://scenes/main_scenes/game.tscn")
+		else:
+			get_tree().change_scene_to_file("res://scenes/main_scenes/tutorial.tscn")
 		print("fully faded rect")
 
 

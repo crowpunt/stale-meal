@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 		recheck_cooldown = 0.5
 	
 	if state == State.EATING:
-		Save.save_data["happy"] -= 0.5 * delta
+		Save.save_data["happy"] -= 0.2 * delta
 		sprite.pause()
 		sprite.frame = 0
 	else:
@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 				var current: int = Save.save_data["cell_ids"][int(current_table.name)]
 				if current != 0:
 					# this game sucks
-					if randi_range(1, int(str(current_table.type)[1]) * 2) == 1:
+					if randi_range(1, int(str(current_table.type)[1]) * 2) == 1 or Save.save_data["tutorial_done"] == false:
 						var mess_scene: PackedScene = preload("res://scenes/units/mess.tscn")
 						var scene: StaticBody2D = mess_scene.instantiate()
 						scene.global_position = self.global_position
@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 						multiplier += (0.25 * (float(str(register.type)[1]) * 1.5))
 				Save.save_data["money"] += round(50 * multiplier)
 				if Save.save_data["happy"] <= 95:
-					Save.save_data["happy"] += 5
+					Save.save_data["happy"] += 10
 				print("customer exited the building, gained " + str(50 * multiplier) + "$")
 				Save.save_to_file()
 				queue_free()
@@ -100,6 +100,12 @@ func draw_cooldown_gui() -> void:
 		progress_bar.visible = true
 	else:
 		progress_bar.visible = false
+
+
+func kill() -> void:
+	remove_from_group("customers")
+	current_table.taken = false
+	queue_free()
 
 
 func get_nearest_table() -> StaticBody2D:

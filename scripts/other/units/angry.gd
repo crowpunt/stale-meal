@@ -4,7 +4,7 @@ extends StaticBody2D
 var in_area: bool = false
 var nearest: StaticBody2D
 var speed: float = randf_range(0.75, 1)
-var check_cd: float = 60
+var check_cd: float = 0
 
 
 func _process(delta: float) -> void:
@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	if check_cd <= 0:
 		print("enemy checked for customers")
 		nearest = get_nearest_customer()
-		check_cd = 20
+		check_cd = 2
 	if in_area == true and Input.is_action_just_pressed("left_click"):
 		print("enemy destroyed")
 		self.queue_free()
@@ -43,8 +43,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if nearest != null:
 		if area.get_parent() == nearest:
 			print("enemy collided with customer")
-			area.get_parent().remove_from_group("customers")
-			area.get_parent().queue_free()
+			area.get_parent().kill()
 			nearest = null
-			Save.save_data["happy"] -= 30
+			Save.save_data["happy"] -= 20
 			check_cd = 3
