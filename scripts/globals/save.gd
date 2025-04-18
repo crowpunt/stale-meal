@@ -2,7 +2,7 @@ extends Node
 
 
 var file_path: String = "user://stalemeal.save"
-const VERSION: String = "v3-playtest"
+const VERSION: String = "v1-release"
 
 
 var save_data_temp: Dictionary = {
@@ -14,7 +14,7 @@ var save_data_temp: Dictionary = {
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 	],
-	"money" : 2000,
+	"money" : 1000,
 	"happy" : 100,
 	"tutorial_done" : false,
 }

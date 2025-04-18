@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dmw50qns3el3o"]
+[gd_scene load_steps=16 format=3 uid="uid://dmw50qns3el3o"]
 
 [ext_resource type="Texture2D" uid="uid://clyfcu122v03c" path="res://assets/sprites/enviornment/floor.png" id="1_fqmia"]
 [ext_resource type="PackedScene" uid="uid://delo0jd7o5o1h" path="res://scenes/units/appliance.tscn" id="2_3wwfn"]
@@ -9,6 +9,8 @@
 [ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/fonts/4x4-font.ttf" id="4_5amgp"]
 [ext_resource type="Script" uid="uid://dikewkte6kvlh" path="res://scripts/other/gui.gd" id="4_leqql"]
 [ext_resource type="Texture2D" uid="uid://bgyik0altasob" path="res://assets/sprites/enviornment/gui_counter.png" id="4_t5sjj"]
+[ext_resource type="AudioStream" uid="uid://bfxhlfbwir12e" path="res://assets/audio/startup_click.wav" id="6_ve26b"]
+[ext_resource type="AudioStream" uid="uid://d07x188brkcbg" path="res://assets/audio/main_theme.mp3" id="7_ve26b"]
 [ext_resource type="Script" uid="uid://k0vpwmiq5r1" path="res://scripts/components/spawner_comp.gd" id="11_3ls1w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfqos"]
@@ -109,6 +111,13 @@ text = "%100"
 label_settings = SubResource("LabelSettings_5amgp")
 vertical_alignment = 1
 autowrap_mode = 1
+
+[node name="ClickSFX" type="AudioStreamPlayer" parent="Camera2D/Gui"]
+stream = ExtResource("6_ve26b")
+
+[node name="TitleTrack" type="AudioStreamPlayer" parent="Camera2D/Gui"]
+stream = ExtResource("7_ve26b")
+volume_db = -4.0
 
 [node name="FadeRect" type="CanvasLayer" parent="Camera2D"]
 

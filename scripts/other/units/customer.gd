@@ -86,7 +86,7 @@ func _physics_process(delta: float) -> void:
 				for register: StaticBody2D in get_tree().get_nodes_in_group("appliances"):
 					if str(register.type)[0] == "2":
 						multiplier += (0.25 * (float(str(register.type)[1]) * 1.5))
-				Save.save_data["money"] += round(50 * multiplier)
+				Save.save_data["money"] += round(20 * multiplier)
 				if Save.save_data["happy"] <= 95:
 					Save.save_data["happy"] += 10
 				print("customer exited the building, gained " + str(50 * multiplier) + "$")
@@ -104,7 +104,8 @@ func draw_cooldown_gui() -> void:
 
 func kill() -> void:
 	remove_from_group("customers")
-	current_table.taken = false
+	if current_table != null:
+		current_table.taken = false
 	queue_free()
 
 

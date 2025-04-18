@@ -6,12 +6,20 @@ extends CanvasLayer
 
 @onready var cash_label: Label = $TextGui/CashLabel
 @onready var percent_label: Label = $TextGui/PercentLabel
+@onready var click_sfx: AudioStreamPlayer = $ClickSFX
+@onready var title_track: AudioStreamPlayer = $TitleTrack
 
 var mouse_in: Array = [false, false, false, false]
 var move_select_towards: bool = true
 
 
 func _process(_delta: float) -> void:
+	if title_track.playing == false:
+		title_track.play()
+	
+	if Input.is_action_just_pressed("left_click") or Input.is_action_just_pressed("right_click"):
+		click_sfx.play()
+	
 	handle_upgrading()
 	change_stat_label()
 	handle_shading_rect()

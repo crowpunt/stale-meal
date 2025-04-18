@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://kudxacse2ddq"]
+[gd_scene load_steps=50 format=3 uid="uid://kudxacse2ddq"]
 
 [ext_resource type="Texture2D" uid="uid://by7bw5k2t1nrj" path="res://assets/sprites/title/background_title.png" id="1_6lybn"]
 [ext_resource type="Script" uid="uid://c0oe21xmrm3rb" path="res://scripts/other/title_button_manager.gd" id="1_dwypo"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cqd44rlpbj7lj" path="res://scripts/components/autoplay_comp.gd" id="4_6lybn"]
 [ext_resource type="Script" uid="uid://c2pdq1vfrqvvy" path="res://scripts/other/rects/fade_out.gd" id="7_udrvt"]
 [ext_resource type="FontFile" uid="uid://bu2fl6x507ljj" path="res://assets/fonts/4x4-font.ttf" id="8_gnnkw"]
+[ext_resource type="AudioStream" uid="uid://bfxhlfbwir12e" path="res://assets/audio/startup_click.wav" id="9_6yeny"]
 [ext_resource type="Script" uid="uid://xrifvbhed3bb" path="res://scripts/other/rects/fade_to_next_from_title.gd" id="10_gnnkw"]
 [ext_resource type="Script" uid="uid://buik2yejvbf4x" path="res://scripts/components/mouseignore_comp.gd" id="10_rfda8"]
 
@@ -341,6 +342,9 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_p40pm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_xd0mm")
 text = "play"
 alignment = 0
+
+[node name="ClickSFX" type="AudioStreamPlayer" parent="CrucialElements"]
+stream = ExtResource("9_6yeny")
 
 [node name="Rects" type="CanvasLayer" parent="."]
 
